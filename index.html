@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Магазин</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1>Магазин</h1>
+  <div>В корзине: <span id="cart-count">0</span> | Итого: <span id="cart-total">0 ₽</span></div>
+  <button id="open-order">Оформить заказ</button>
+</header>
+
+<main>
+  <section id="catalog" aria-labelledby="catalog-title">
+    <h2 id="catalog-title">Каталог</h2>
+    <!-- карточки появятся из JS -->
+  </section>
+
+  <aside aria-labelledby="cart-title">
+    <h2 id="cart-title">Корзина</h2>
+    <ul id="cart-list"></ul>
+    <div>Итого: <strong id="aside-total">0 ₽</strong></div>
+    <button id="clear-cart">Очистить корзину</button>
+    <button id="checkout-btn">Оформить заказ</button>
+  </aside>
+</main>
+
+<!-- Форма заказа (скрыта) -->
+<section id="order" hidden>
+  <h2>Оформление заказа</h2>
+  <form id="order-form">
+    <label>Имя <input name="firstName" required></label>
+    <label>Фамилия <input name="lastName" required></label>
+    <label>Адрес <textarea name="address" required></textarea></label>
+    <label>Телефон <input name="phone" type="tel" required></label>
+    <button type="submit">Создать заказ</button>
+    <button type="button" id="cancel-order">Отмена</button>
+  </form>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
