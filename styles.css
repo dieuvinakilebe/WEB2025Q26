@@ -1,9 +1,51 @@
+*{box-sizing:border-box}
+:root{--gap:16px;--max:980px}
 
-body{font-family:system-ui,Arial,sans-serif;margin:0;padding:16px}
-header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:16px}
-main{display:grid;grid-template-columns:2fr 1fr;gap:16px}
-#catalog{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.card{border:1px solid #ddd;border-radius:8px;padding:12px}
+body{font-family:system-ui,Arial,sans-serif;margin:0}
+.page{max-width:var(--max);margin:0 auto;padding:16px}
+
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+header h1{margin:0;font-size:1.8rem}
+button{cursor:pointer}
+input,textarea,button{font-size:16px} 
+
+
+main{
+  display:grid;gap:var(--gap);
+  grid-template-columns:2fr 1fr;           
+}
+
+
+#catalog{
+  display:grid;gap:12px;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); /* авто-адаптив */
+}
+.card{border:1px solid #ddd;border-radius:8px;padding:12px;background:#fff}
 .card h3{margin:.2rem 0}
-@media (max-width:900px){ main{grid-template-columns:1fr} #catalog{grid-template-columns:repeat(2,1fr)} }
-@media (max-width:560px){ #catalog{grid-template-columns:1fr} }
+
+aside{border:1px solid #ddd;border-radius:8px;padding:12px;height:fit-content;position:sticky;top:12px;background:#fff}
+#cart-list{display:flex;flex-direction:column;gap:8px}
+#cart-list input[type="number"]{width:64px}
+
+#order{border:1px solid #ddd;border-radius:8px;padding:12px;margin-top:16px;background:#fff}
+#order form{display:grid;gap:10px}
+
+@media (max-width:1024px){
+  .page{padding:12px}
+  main{grid-template-columns:1.4fr 1fr}
+}
+
+@media (max-width:900px){
+  header{flex-direction:column;align-items:flex-start;gap:8px}
+  main{grid-template-columns:1fr}        
+  aside{position:static}                   
+  #catalog{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+  header button,#checkout-btn,#clear-cart{width:100%}  
+}
+
+
+@media (max-width:480px){
+  .page{padding:10px}
+  header h1{font-size:1.4rem}
+  #catalog{grid-template-columns:1fr}
+}
