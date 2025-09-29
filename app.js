@@ -4,7 +4,9 @@ const cnt=document.getElementById('cart-count')
 const tot=document.getElementById('cart-total')
 const list=document.getElementById('cart-list')
 const atot=document.getElementById('aside-total')
+const clr=document.getElementById('clear-cart')
 const m='₽'
+const key='cart-v1'
 function f(n){return new Intl.NumberFormat('ru-RU').format(n)}
 function rCat(){
   cat.innerHTML=''
@@ -16,8 +18,13 @@ function rCat(){
   })
 }
 rCat()
-const cart={}
-function add(id){cart[id]=(cart[id]||0)+1;rCart()}
+function load(){try{return JSON.parse(localStorage.getItem(key))||{}}catch{return{}}}
+function save(){localStorage.setItem(key,JSON.stringify(cart))}
+const cart=load()
+function add(id){cart[id]=(cart[id]||0)+1;save();rCart()}
+function setq(id,q){q=Math.max(1,parseInt(q||'1',10));cart[id]=q;save();rCart()}
+function rem(id){delete cart[id];save();rCart()}
+function clear(){Object.keys(cart).forEach(k=>delete cart[k]);save();rCart()}
 function rCart(){
   let n=0,s=0
   list.innerHTML=''
@@ -33,4 +40,25 @@ function rCart(){
   atot.textContent=`${f(s)} ${m}`
 }
 cat.addEventListener('click',e=>{const id=e.target.dataset.id;if(id)add(id)})
+list.addEventListener('input',e=>{if(e.target.classList.contains('q'))setq(e.target.dataset.id,e.target.value)})
+list.addEventListener('click',e=>{const id=e.target.dataset.r;if(id)rem(id)})
+clr.addEventListener('click',clear)
+const oBtn=document.getElementById('open-order')
+const cBtn=document.getElementById('checkout-btn')
+const oSec=document.getElementById('order')
+const xBtn=document.getElementById('cancel-order')
+const form=document.getElementById('order-form')
+function o(){oSec.hidden=false;const a=form.querySelector('input,textarea');if(a)a.focus()}
+function x(){oSec.hidden=true}
+oBtn.addEventListener('click',o)
+cBtn.addEventListener('click',o)
+xBtn.addEventListener('click',x)
+form.addEventListener('submit',e=>{
+  e.preventDefault()
+  if(!form.reportValidity())return
+  alert('Заказ создан!')
+  clear()
+  form.reset()
+  x()
+})
 rCart()
